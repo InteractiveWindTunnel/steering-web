@@ -1,0 +1,17 @@
+{% block field_row %}
+{% spaceless %}
+    <div class="control-group">
+        {{ form_label(form) }}
+        <div class="controls">
+        {{ form_widget(form,{attr:{class:'input-xlarge'}}) }}
+        {{ form_errors(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock field_row %}
+
+{% block field_label %}
+{% spaceless %}
+    <label for="{{ id }}" class="control-label">{{ label|trans([], 'UsersBundle') }}</label>
+{% endspaceless %}
+{% endblock field_label %}

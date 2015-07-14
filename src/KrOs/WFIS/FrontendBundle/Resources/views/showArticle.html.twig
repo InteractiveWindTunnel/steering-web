@@ -1,0 +1,15 @@
+{% extends 'FrontendBundle::base.html.twig' %}
+
+{% block content %}
+  {% if isAdmin %}
+    <div class="editArticle"><a href="{{path('editArticle',{slug:article.slug})}}"><i class="icon-edit"></i> edytuj</a> <a href="{{path('deleteArticle',{slug:article.slug})}}" class="red"><i class=" icon-trash"></i> usuń</a></div>
+  {% endif %}
+  <h2>{{article.title}}</h2>
+  <div>
+    {{article.content|raw()}}
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+{% endblock %}

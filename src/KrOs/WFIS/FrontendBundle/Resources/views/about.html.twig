@@ -1,0 +1,76 @@
+{% extends 'FrontendBundle::base.html.twig' %}
+
+{% block content %}
+<ol class="about">
+    <li>
+        <dl>
+            <dt>Co to jest ITA - czyli Interaktywny Tunel Aerodynamiczny ?</dt>
+            <dd>
+            <p>
+                <strong>I.T.A.</strong> to urządzenie, które pozwala na dokonywanie pomiarów związanych z aerodynamiką - działem fizyki zajmującym się badaniem zjawisk związanych z ruchem gazów oraz ciał w ośrodkach gazowych.
+                Pozwala na przykład zmierzyć wartości sił działających na kawałek skrzydła opływanego przez powietrze (siła nośna, opór), pozwala mierzyć wartości ciśnień wokół różnych przekrojów, a także symulować różne sytuacje z życia (śnieżyce, wiatr wokół wieżowców i.t.p).<br/>
+            </p>
+            <p> 
+                <strong>I.T.A.</strong> ma tę zaletę, że aby wykonać pomiary nie trzeba wcale wyruszać w daleką podróż. Tunel dostępny jest on-line (w pełni już niebawem). Oznacza to, że można skupić się na eksperymentowaniu nie tracąc czasu na podróże. Tym natomiast, który lubią p odróżować możemy udostępnić tunel lokalnie. Ma to tę niezwykłą zaletę, że można przekonać się, iż tunel rzeczywiście istnieje (to dla niedowiarków) oraz uczestniczyć w warszt atach prowadzonych przy tunelu.</dd>
+            </p>
+        </dl>
+    </li>
+    <li>
+        <dl>
+            <dt>Po co powstał I.T.A. ?</dt>
+            <dd><strong>I.T.A.</strong> powstał aby umożliwić wszystkim chętnym eksperymentowanie i poznawanie praw rządzących światem - w tym przypadku światem ptaków, owadów, szybowców, samolotów i innych aeroplanów.
+            Tunel z założenia ma dawać możliwość obcowania z nauką zarówno "osobiście" (kiedy pracuje się będąc na Wydziale Fizyki i Informatyki Stosowanej Uniwersytetu Łódzkiego) jak i zdalnie - na odległość (siedząc wygodnie w fotelu na działce, albo w klasie). Do pracy lokalnej potrzeba przyjechać do Łodzi - do pracy zdalnej wystarczy internet i zarejestrowanie się jaki użytkownik.</dd>
+        </dl>
+    </li>
+    <li>
+        <dl>
+            <dt>Jakie eksperymenty mogę wykonywać z I.T.A.?</dt>
+            <dd>Dobre pytanie. Odpowiedź jest funkcją rosnącą ;-)<br/>
+            A poważnie - przykładową tematykę można przejrzeć na stronie Zastosowania, ale nie jest to skończona, zamknięta lista. Wiemy, że zaproponowane tematy jedynie rozpoczynają "dyskusję" i może ich przybywać. Z założenia użytkownicy mają przywilej sugerować kolejne pomysły na kolejne pomiary. Najciekawsze weźmiemy pod uwagę i zbudujemy nowe moduły badawcze.</dd>
+        </dl>
+    </li>
+    <li>
+        <dl>
+            <dt>Czy korzystanie z tunelu jest drogie?</dt>
+            <dd>Dla eksperymentujących jest w pełni nieodpłatne. Tunel kosztował sporo pieniędzy i ogromnie dużo pracy ale chcemy aby do zastosowań edukacyjnych zawsze pozostał wolny od opłat.</dd>
+        </dl>
+    </li>
+    <li>
+        <dl>
+            <dt>Jak mogę wspomóc projekt I.T.A.?</dt>
+            <dd>
+                Miło, że pytacie ;-) <br/>
+                <p>
+                    Niektórzy już wspomogli powstanie tunelu ofiarując:
+                    <ol>
+                        <li><strong>finanse</strong> - Tunel został zbudowany za pieniądze Katedry Modelowania Procesów Nauczania, Wydziału Fizyki i Informatyki Stosowanej Uniwersytetu Łódzkiego.</li>
+                        <li><strong>specjalistyczny sprzęt</strong> Czujniki tensometryczne ofiarowała firma ZEPWN, sterownik mikroprocesorowy kontrolujący prędkość wiatraków wykonała firma eprojects Sosnowiec, profile skrzydeł na profesjonalnej obrabiarce przygotował Pan Krzysztof Śmigielski.</li>
+                        <li><strong>Swój czas i umiejętności</strong> Dzięki Łukaszowi Mińkowskiemu powstaje i udoskonala się aplikacja  tunelu udostępniająca jego możliwości do pracy zdalnej.<br/> 
+                            Dzięki Dawidowi Królakowi i Grzegorzowi Osimowiczowi powstaje wersja dostępu do sterowania tunelem poprzez stronę www.<br/> 
+                            Wsparcie programistyczne rozpoczęli również: Piotr Banasiński i Tomasz Bereza.
+                        </li>
+                        <li><strong>oraz dobre rady i pomysły</strong> <h3 class="thanks">Wszystkim SERDECZNIE DZIĘKUJEMY za pomoc i wszelkie wsparcie!</h3></li>
+                    </ol>
+                </p>
+            </dd>
+        </dl>
+    </li>
+</ol>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript">
+        $(function(){
+            $('#leftMenu_about').addClass('active');
+            $('#leftMenu_about').find('.icon-home').addClass('icon-white');
+        });
+    </script>
+    
+    {% javascripts 
+        
+        %}
+        <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}

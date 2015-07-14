@@ -1,0 +1,160 @@
+{% extends 'FrontendBundle::base.html.twig' %}
+
+{% block content %}
+	<div class="span6 halfMargin withCamera">
+		<img class="camera" src="http://kamera.wfis.uni.lodz.pl/videostream.cgi?user=tunel&pwd=" class="span6" />
+	</div>
+	<div class="span3 right-options" id="control-panel">
+	  <div>
+	    <table class="span3 table-condensed table-bordered widgetTable">
+	      <thead>
+		<tr><th colspan="2">Układ</th></tr>
+	      </thead>
+	      <tbody>
+		<tr>
+		  <td>Stan:</td>
+		  <td id="deviceState">Wyłączony</td>
+		</tr>
+	      </tbody>
+	      <tfoot>
+		<tr>
+		  <td colspan="2" class="right-align">
+		    <a href="#" class="btn btn-mini btn-primary" id="powerSwtich" value="0">Włącz układ</a>
+		  </td>
+		 </tr>
+	      </tfoot>
+	    </table>
+	    <table class="span3 table-condensed table-bordered widgetTable">
+	      <thead>
+		<tr><th colspan="3">wiatraki</th></tr>
+	      </thead>
+	      <tbody>
+		<!--<tr>
+		  <td>Stan:</td>
+		  <td id="fansState">Wyłączone</td>
+		</tr>-->
+		<tr>
+		  <td id="fan0"><span id="fanSparkline0"></span></td>
+		  <td id="fan1"><span id="fanSparkline1"></span></td>
+		  <td id="fan2"><span id="fanSparkline2"></span></td>
+		</tr>
+		<tr>
+		  <td id="fan3"><span id="fanSparkline3"></span></td>
+		  <td id="fan4"><span id="fanSparkline4"></span></td>
+		  <td id="fan5"><span id="fanSparkline5"></span></td>
+		</tr>
+		<tr>
+		  <td id="fan6"><span id="fanSparkline6"></span></td>
+		  <td id="fan7"><span id="fanSparkline7"></span></td>
+		  <td id="fan8"><span id="fanSparkline8"></span></td>
+		</tr>
+	      </tbody>
+	      <tfoot>
+		<tr>
+		  <td colspan="3" class="right-align">
+		    <a href="#" class="btn btn-mini btn-danger hidden" id="fanSwtich" value="1">Wyłącz wiatraki</a>
+		  </td>
+		 </tr>
+	      </tfoot>
+	    </table>
+	    <br/><br/><br/>
+	  </div>
+		<div class="buttons">			
+			
+		</div>
+		<div class="">
+			<h4>Moc wiatraków</h4>
+			<div id="slider"></div>
+			<h4>Kąt natarcia</h4>
+			<div id="servoSlider"></div>
+			<!--<table class="table table-bordered table-striped table-condensed">
+				<tr><td>Siła wiatru:</td><td>0</td></tr>
+				<tr><td>Lorem ipsum:</td><td>0</td></tr>
+				<tr><td>dolor sit amet:</td><td>0</td></tr>
+				<tr><td>consectetur adipisicing elit:</td><td>0</td></tr>
+			</table>			-->
+			<!--<a title="Zrób zdjęcie układu pomiarowego" target="_blank" imageanchor="1" href="http://kamera.wfis.uni.lodz.pl/snapshot.cgi?user=tunel&amp;pwd="><img height="100" border="0" width="100" src="http://tunel.wfis.uni.lodz.pl/_/rsrc/1333551732891/konkurs/pomiary123/camera_icon.png?height=100&amp;width=100" alt="zrob zdjecie"></a>-->
+			<button id="hide-panel-button" class="btn span3">Schowaj panel</button>
+		</div>
+	</div>
+
+<div class="row">
+    <div class="span9">
+ <div id="conn_status">Not Connected</div></div>
+</div>
+<div class="row plots">
+	<div class="row span9"><h3>Siła oporu</h3>
+		<div id="plot1" class="span9 plot1"></div>		
+	</div>
+	<div class="row span9"><h3>Siła nośna</h3>
+		<div id="plot2" class="span9 plot1"></div>
+	</div>
+	<div class="row span9"><h3>Szybkość wiatru</h3>
+		<div id="plot3" class="span9 plot1"></div>
+	</div>	
+	<div class="row span9"><h3>Ciśnienie</h3>
+	    <div id="plot4" class="span9 plot1"></div>
+	</div>
+</div>
+
+<div class="row">
+<h3>Wyniki pomiarów</h3>
+
+<div class="span9">
+<button type="button" id="grab-start-button">Rozpocznij zapis</button>
+<button type="button" id="grab-stop-button" disabled="disabled">Przerwij zapis</button>
+<textarea id="data-debug" style="width:100%;height:300px;">
+</textarea>
+</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+	<script type="text/javascript">
+		$(function(){
+			$('#leftMenu_wing').addClass('active');
+			$('#leftMenu_wing').find('.icon-home').addClass('icon-white');
+			$('#slider').slider({
+				min:0,
+				max:1000,
+				steep:1,
+				change: function( event, ui ) {
+				  fansSpeed(ui.value);
+				}
+			});
+			$('#servoSlider').slider({
+				min:-90,
+				max:90,
+				steep:1,
+				change: function( event, ui ) {
+				  servoAngle(ui.value);
+				}
+			});
+			$('#slider').bind('slidechange',function(event,ui){
+				$('#windProgressBar').animate({
+					
+				});
+			});
+		});
+	function togglePanel(event) {
+		var controlPanel = document.getElementById('control-panel');
+		if (controlPanel.classList.contains('hidden-panel')) {
+			controlPanel.classList.remove('hidden-panel');
+			event.originalTarget.textContent = 'Schowaj panel';
+		} else {
+			controlPanel.classList.add('hidden-panel')
+			event.originalTarget.textContent = 'Pokaż panel';
+		}
+	}
+	document.getElementById('hide-panel-button').addEventListener('click', togglePanel);
+
+	</script>
+	<script type="text/javascript" src="/bundles/frontend/js/flot/jquery.flot.min.js"></script>
+	{% javascripts 
+		'@FrontendBundle/Resources/public/js/index.js'		
+		'@FrontendBundle/Resources/public/js/jquery.sparkline.min.js'		
+		%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}

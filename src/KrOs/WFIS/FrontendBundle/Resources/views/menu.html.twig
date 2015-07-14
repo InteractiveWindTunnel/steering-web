@@ -1,0 +1,38 @@
+{% set isAdmin = false %}
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  {% for role in app.user.getRoles() %}
+    {% if role == 'ROLE_SUPER_ADMIN' %}
+	    {% set isAdmin = true %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+  <li class="nav-header">Tunel</li>
+  <li id="leftMenu_wing"><a href="{{path('wing')}}"><i class="icon-plane"></i> Profil skrzydła</a></li>
+  <li id="leftMenu_power"><a href="{{path('power')}}"><i class="icon-home"></i> Siłownia wiatrowa</a></li>
+ <li id="leftMenu_third"><a href="{{path('third')}}"><i class="icon-home"></i>Code: EXP03</a></li>
+
+{% endif %}	
+<li class="nav-header">Menu</li>
+<li id="leftMenu_about"><a href="{{path('about')}}"><i class="icon-pencil"></i> O systemie</a></li>
+<li id="leftMenu_calendar"><a href="#"><i class="icon-calendar"></i> Kalendarz</a></li>
+<li id="leftMenu_contact"><a href="#"><i class="icon-envelope"></i> Kontakt</a></li>
+{% if isAdmin %}
+  <li class="nav-header">Administracja</li>
+  <li id="leftMenu_userList"><a href="{{path('users_list')}}"><i class="icon-user"></i> Użytkownicy</a>
+  <li><a href="{{path('addArticle')}}"><i class="icon-edit"></i> Dodaj artykuł</a></li>
+{% endif %}
+
+
+<li id="leftMenu_calendar"><a href="#"><i class="icon-calendar"></i> Kalendarz</a></li>
+{% for article in articles %}
+  <li id="leftMenu_about"><a href="{{path('showArticle',{slug:article.slug})}}"><i class="{{article.iconClass}}"></i> {{article.title}}</a></li>
+{% endfor %}
+
+{% if isAdmin %}
+  <li class="nav-header">Administracja</li>
+  <li id="leftMenu_userList"><a href="{{path('users_list')}}"><i class="icon-user"></i> Użytkownicy</a>
+  <li><a href="{{path('addArticle')}}"><i class="icon-edit"></i> Dodaj artykuł</a></li>
+{% endif %}

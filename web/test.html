@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Twisted WebSocket Test</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" ></script>
+        <script language='javascript'>
+
+            $(document).ready(function() {
+                var ws = new WebSocket("ws://ita.wfis.uni.lodz.pl:5563/echo");
+                ws.onmessage = function(evt) {
+			var temp = $.parseJSON(evt.data);
+                    $('#output #ain0').text(temp.ain0);
+                    $('#output #ain1').text(temp.ain1);
+                    $('#output #ain2').text(temp.ain2);
+                }
+                ws.onopen = function(evt) {
+                    $('#conn_status').html('<b>Connected</b>');
+                    ws.send('Test data');
+                }
+                ws.onerror = function(evt) {
+                    $('#conn_status').html('<b>Error</b>');
+                }
+                ws.onclose = function(evt) {
+                    $('#conn_status').html('<b>Closed</b>');
+                }
+            });
+
+        </script>
+
+    </head>
+    <body>
+        <h1>WebSocket in Twisted Test</h1>
+        <div id="conn_status">Not Connected</div>
+        <div id="output">
+<div id="ain0" style="width:300px;float:left;"></div>
+<div id="ain1" style="width:300px;float:left;"></div>
+<div id="ain2" style="width:300px;float:left;"></div>
+	</div>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+{% extends 'FrontendBundle::base.html.twig' %}
+
+{% block content %}
+	<table class="table table-striped table-bordered table-condensed span9">
+		<thead>
+			<tr>
+				<td></td>
+				<td class="">ID</td>
+				<td class="span3">nickname</td>
+				<td class="span3">email</td>
+				<td class="">aktywny</td>
+				<td class="">ostatnie logowanie</td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td><input type="checkbox" value="{{user.id}}" class="userCheckbox"/></td>
+					<td>{{user.id}}</td>
+					<td>{{user.username}}</td>
+					<td>{{user.email}}</td>
+					<td><i class="icon-{%if user.enabled %}ok{%else%}remove{%endif%}"></i></td>
+					<td>{{user.lastLogin|date('d.m.Y')}}</td>
+					<td><a href="{{path('user_edit',{'nickname':user.username})}}" title="edytuj"><i class="icon-edit"></i></a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="7" class="right-align">
+					<a href="#" class="btn btn-danger btn-mini" id="deleteUser">Usuń</a>
+					<a href="{{path('user_add')}}" class="btn btn-primary btn-mini">Dodaj</a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}
+	<script type="text/javascript">
+		$(function(){
+			$('#leftMenu_userList').addClass('active');
+		});
+		$('#deleteUser').bind('click',function(){
+			var ids = [];
+			$.each($('.userCheckbox'),function(){
+				if($(this).is(':checked')){
+					ids.push($(this).attr('value'));
+				}					
+			})
+			$.ajax({
+				url: "{{path('user_delete')}}",
+				data: {'id[]':ids},
+				success: function(data){
+					$.each($('.userCheckbox'),function(){
+						if($(this).is(':checked')){
+							$(this).parent().parent().remove();
+						}
+					});
+				}
+				});
+			return false;
+		});
+	</script>
+{%endblock%}

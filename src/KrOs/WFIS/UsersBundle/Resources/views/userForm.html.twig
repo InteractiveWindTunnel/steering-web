@@ -1,0 +1,13 @@
+{% extends 'FrontendBundle::base.html.twig' %}
+
+{% form_theme form 'UsersBundle:Form:fields.html.twig' %}
+{% block content %}
+<form method="POST" {{ form_enctype(form) }} class="form-horizontal" id="user_form" action="{{path('user_form_submit')}}">
+	{{form_widget(form)}}
+	<div class="form-actions">
+		<a href="{{path('users_list')}}" class="btn btn-danger">Anuluj</a>
+        <input type="submit" class="btn btn-primary" value="Zapisz" />
+    </div>
+</form>
+
+{%endblock%}

@@ -1,0 +1,76 @@
+{% extends 'FrontendBundle::base.html.twig' %}
+
+{% block stylesheets %}
+{{parent()}}
+  {% stylesheets
+      '@FrontendBundle/Resources/public/css/elrte.min.css' 
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+  {% endstylesheets %}
+{% endblock %}
+
+{% block content %}
+  <form id="article_form" action="{{path('submitArticle')}}" method="POST">
+  {% if article is defined %}
+    <input type="hidden" name="aid" id="aid" value="{{article.id}}" />
+  {% endif %}
+    {{form_widget(form)}}
+    <input type="submit" />
+  </form>
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+	{% javascripts 
+		'@FrontendBundle/Resources/public/js/elrte.min.js'
+		%}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	<script type="text/javascript">
+	  var opts = {
+		  // doctype  : '<!DOCTYPE html PUBLIC  "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+		  cssClass : 'el-rte',
+		  //lang     : 'en',
+		  height   : 350,
+
+		  toolbar  : 'maxi', // custom
+		  cssfiles : ['elrte/css/elrte-inner.css', 'elrte/css/inner-example.css'],
+		  // elfinder
+		  fmOpen   : function(callback) {
+			  $('<div id="myelfinder"></div>').elfinder({
+				  url : '../../elfinder/connectors/php/connector.php',
+				  lang : 'en',
+				  dialog : { width : 900, modal : true, title : 'Files' }, // open in dialog
+				  closeOnEditorCallback : true, // close elFinder after file select
+				  editorCallback : callback // pass callback to editor
+			  });
+		  },
+		  // example of user replacement
+		  // restricts edit of blocks like <!-- BEGIN MY_BLOCK -->anything<!-- END MY_BLOCK -->
+		  replace : [ function(html) {
+			  var self = this;
+			  return html.replace(/(<!--\s*BEGIN\s*([^>]+)\s*-->([\s\S]*?)<!--\s*END\s*(\2)\s*-->)/gi, function(t, a, b, c, d) {
+
+				  if (b == d) {
+					  //self.rte.log([b, d]);
+					  var id = 'MYTAG'+Math.random().toString().substring(2);
+					  self.scripts[id] = t;
+					  return '<img id="'+id+'" src="'+self.url+'pixel.gif" class="elrte-protected elrte-MYTAG">';
+				  }
+				  return html;
+			  });
+		  }],
+		  restore : [ function(html) {
+			  var self = this;
+			  return html.replace(this.serviceClassRegExp, function(t, n, a) {
+				  a = self.parseAttrs(a);
+				  if (a["class"]['elrte-MYTAG']) {
+					  return self.scripts[a.id] + "\n" || '';
+				  }
+				  return t;
+			  });
+		  }]
+	  };
+	  var rte = $('#ArticleType_content').elrte(opts);
+	</script>
+{% endblock %}
