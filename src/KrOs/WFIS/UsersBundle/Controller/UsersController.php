@@ -66,13 +66,12 @@ class UsersController extends Controller
             $user = new User();
         }
         $form = $this->createForm(new UserType(), $user);
-        $form->bindRequest($request);
-        if ($form->isValid()) {
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $userManager = $this->get('fos_user.user_manager')->updateUser($user);
             return $this->redirect($this->generateUrl('users_list'));
-        } else {
-            return $this->render("UsersBundle::userForm.html.twig", array('form'=>$form->createView()));
         }
+        return $this->render("UsersBundle::userForm.html.twig", array('form'=>$form->createView()));
     }
     
     /**

@@ -16,20 +16,12 @@ class FrontendController extends Controller
 {
     /**
      * @Route("/skrzydlo/", name="wing")
+     * @Method("GET")
      * @Secure(roles="ROLE_USER")
      */
     public function wingAction()
     {
-    /*$setting = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Setting')->findOneBy(array('key'=>'activeExperiment'));
-    if ($setting->getKey() == 'wing')
-      return $this->render('FrontendBundle::wing.html.twig');
-    else{
-      if ($this->get('security.context')->getToken()->getUser()->isSuperAdmin()){
         return $this->render('FrontendBundle::wing.html.twig');
-      }
-    }*/
-        return $this->render('FrontendBundle::wing.html.twig');
-        return $this->redirect($this->get('router')->generate('about'));
     }
 
     /**
@@ -39,9 +31,8 @@ class FrontendController extends Controller
     {
         if ($r->get('view') === 'full') {
             return $this->render('FrontendBundle::third_f.html.twig');
-        } else {
-            return $this->render('FrontendBundle::third.html.twig');
         }
+        return $this->render('FrontendBundle::third.html.twig');
     }
 
     /**
@@ -83,9 +74,10 @@ class FrontendController extends Controller
     
     /**
     * @Route("/article/add", name="addArticle")
+    * @Method("GET")
     * @Secure("ROLE_ADMIN")
     */
-    public function addNewArtilce()
+    public function addNewArticleAction()
     {
         $article = new Article();
         $form = $this->createForm(new ArticleType(), $article);
@@ -96,7 +88,7 @@ class FrontendController extends Controller
     * @Route("/article/edit/{slug}", name="editArticle")
     * @Secure("ROLE_ADMIN")
     */
-    public function editArtilce($slug)
+    public function editArticleAction($slug)
     {
         $article = $article = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Article')->findOneBy(array('slug'=>$slug));
         $form = $this->createForm(new ArticleType(), $article);
@@ -107,7 +99,7 @@ class FrontendController extends Controller
     * @Route("/article/delete/{slug}", name="deleteArticle")
     * @Secure("ROLE_ADMIN")
     */
-    public function deleteArticle($slug)
+    public function deleteArticleAction($slug)
     {
         $em=$this->get('doctrine.orm.entity_manager');
         $article = $em->getRepository('FrontendBundle:Article')->findOneBy(array('slug'=>$slug));
@@ -120,7 +112,7 @@ class FrontendController extends Controller
     * @Route("/article/submit", name="submitArticle")
     * @Secure("ROLE_ADMIN")
     */
-    public function submitForm(Request $request)
+    public function submitFormAction(Request $request)
     {
         $article=new Article();
         $id = $request->get('aid');
@@ -147,7 +139,7 @@ class FrontendController extends Controller
     /**
     * @Route("/article/{slug}", name="showArticle")
     */
-    public function showArticle($slug)
+    public function showArticleAction($slug)
     {
         $article = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Article')->findOneBy(array('slug'=>$slug));
         return $this->render('FrontendBundle::showArticle.html.twig', array('article'=>$article));
