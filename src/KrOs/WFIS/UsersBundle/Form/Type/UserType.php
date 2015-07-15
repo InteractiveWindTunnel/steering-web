@@ -1,6 +1,5 @@
 <?php
-
-namespace KrOs\WFIS\UsersBundle\Form;
+namespace KrOs\WFIS\UsersBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\AbstractType;

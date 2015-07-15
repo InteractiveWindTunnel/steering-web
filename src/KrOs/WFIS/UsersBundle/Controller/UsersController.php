@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use KrOs\WFIS\UsersBundle\Form\UserType;
+use KrOs\WFIS\UsersBundle\Form\Type\UserType;
 use KrOs\WFIS\UsersBundle\Entity\User;
 
 class UsersController extends Controller

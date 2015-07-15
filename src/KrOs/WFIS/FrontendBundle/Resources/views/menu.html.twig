@@ -1,11 +1,7 @@
 {% set isAdmin = false %}
 
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-  {% for role in app.user.getRoles() %}
-    {% if role == 'ROLE_SUPER_ADMIN' %}
-	    {% set isAdmin = true %}
-    {% endif %}
-  {% endfor %}
+  {% set isAdmin = is_granted('ROLE_ADMIN') %}
 {% endif %}
 
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}

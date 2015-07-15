@@ -4,7 +4,7 @@ namespace KrOs\WFIS\FrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +27,7 @@ class FrontendController extends Controller
 
     /**
      * @Route("/EXP03/", name="third")
+     * @Method("GET")
      */
     public function thirdAction(Request $r)
     {
@@ -38,6 +39,7 @@ class FrontendController extends Controller
 
     /**
      * @Route("/silownia/", name="power")
+     * @Method("GET")
      * @Secure(roles="ROLE_USER")
      */
     public function powerAction()
@@ -47,7 +49,7 @@ class FrontendController extends Controller
     
     /**
      * @Route("/ita/", name="index_old")
-     * @Template()
+     * @Method("GET")
      */
     public function powerOldAction()
     {
@@ -56,17 +58,16 @@ class FrontendController extends Controller
     
     /**
      * @Route("/menu/", name="menu")
-     * @Template()
      */
     public function menuAction()
     {
-        $articles = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Article')->findAll();
+        $articles = $this->getDoctrine()->getManager()->getRepository('FrontendBundle:Article')->findAll();
         return $this->render('FrontendBundle::menu.html.twig', array('articles'=>$articles));
     }
     
     /**
     * @Route("/", name="about")
-    * @Template()
+    * @Method("GET")
     */
     public function aboutAction()
     {
@@ -87,13 +88,21 @@ class FrontendController extends Controller
     
     /**
     * @Route("/article/edit/{slug}", name="editArticle")
+    * @Method("GET")
     * @Secure("ROLE_ADMIN")
     */
     public function editArticleAction($slug)
     {
-        $article = $article = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Article')->findOneBy(array('slug'=>$slug));
+        $article = $article = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('FrontendBundle:Article')
+            ->findOneBySlug($slug);
         $form = $this->createForm(new ArticleType(), $article);
-        return $this->render('FrontendBundle::articleForm.html.twig', array('form'=>$form->createView(), 'article'=>$article));
+        return $this->render(
+            'FrontendBundle::articleForm.html.twig',
+            ['form'=>$form->createView(), 'article'=>$article]
+        );
     }
     
     /**
@@ -102,8 +111,8 @@ class FrontendController extends Controller
     */
     public function deleteArticleAction($slug)
     {
-        $em=$this->get('doctrine.orm.entity_manager');
-        $article = $em->getRepository('FrontendBundle:Article')->findOneBy(array('slug'=>$slug));
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('FrontendBundle:Article')->findOneBySlug($slug);
         $em->remove($article);
         $em->flush();
         return $this->redirect($this->get('router')->generate('index'));
@@ -111,6 +120,7 @@ class FrontendController extends Controller
     
     /**
     * @Route("/article/submit", name="submitArticle")
+    * @Method({"GET", "POST"})
     * @Secure("ROLE_ADMIN")
     */
     public function submitFormAction(Request $request)
@@ -122,8 +132,8 @@ class FrontendController extends Controller
             $article = $article = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Article')->findOneBy(array('id'=>$id));
         }
         $form = $this->createForm(new ArticleType(), $article);
-        if ($request->getMethod()==='POST') {
-            $form->bindRequest($request);
+        if ($request->getMethod() === 'POST') {
+            $form->handleRequest($request);
             if ($form->isValid()) {
                 $this->get('doctrine.orm.entity_manager')->persist($article);
                 $this->get('doctrine.orm.entity_manager')->flush();
@@ -142,7 +152,11 @@ class FrontendController extends Controller
     */
     public function showArticleAction($slug)
     {
-        $article = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Article')->findOneBy(array('slug'=>$slug));
+        $article = $this
+            ->get('doctrine.orm.entity_manager')
+            ->getRepository('FrontendBundle:Article')
+            ->findOneBySlug($slug);
+
         return $this->render('FrontendBundle::showArticle.html.twig', array('article'=>$article));
     }
 }
