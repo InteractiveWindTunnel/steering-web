@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="pl">
-	<head>
-		{% block stylesheets %}
-				{% stylesheets 					
-					'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css'
-				%}
-				<link rel="stylesheet" href="{{ asset_url }}" />
-			{% endstylesheets %}
-			<link rel="stylesheet" href="{{asset('/bundles/frontend/css/bootstrap.min.css')}}" />
-		{% endblock %}
-		<title>ITA - Logowanie</title>
-		<meta name="author" content="Grzegorz Osimowicz, Dawid Królak"/>
-		<meta charset="utf-8"> 
-		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <head>
+        {% block stylesheets %}
+                {% stylesheets                  
+                    'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css'
+                %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            <link rel="stylesheet" href="{{asset('/assets/css/style.css')}}" />
+        {% endblock %}
+        <title>ITA - Logowanie</title>
+        <meta name="author" content="Grzegorz Osimowicz, Dawid Królak"/>
+        <meta charset="utf-8"> 
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-		   
-	</head>
-	<body>
-<div class="modal" id="myModal">
-  <div class="modal-header">
-    <h3>ITA - Logowanie</h3>
-  </div>
+           
+    </head>
+    <body class="modal-open">
+{# <div class="modal-backdrop"></div> #}
+<div class="modal-dialog" id="myModal">
+        <div class="modal-content">
+                  <div class="modal-header">
+          <h4 class="modal-title">ITA::Logowanie</h4>
+      </div>
   <div class="modal-body">
     {% block fos_user_content %}{% endblock %}
   </div>
   <div class="modal-footer">
-  	Aby uzyskać dostęp należy skontaktować się z administratorem systemu
+    Aby uzyskać dostęp należy skontaktować się z administratorem systemu
   </div>
 </div>
-<div class="modal-backdrop"></div>
+</div>
 </body>
 </html>

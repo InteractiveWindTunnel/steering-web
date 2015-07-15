@@ -1,28 +1,15 @@
 <!doctype html>
 <html lang="pl">
-    {% set isAdmin = is_granted('ROLE_ADMIN') %}
     <head>
-        {% block stylesheets %}
-                {% stylesheets
-                    '@FrontendBundle/Resources/public/css/bootstrap.min.css' 
-                    '@FrontendBundle/Resources/public/css/base.css'
-                    'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css'
-                    
-                %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-        {% endblock %}
         <title>ITA - {%block title %}Strona Główna{%endblock%}</title>
+        <link rel="stylesheet" href="/assets/css/style.css" />
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css" />
+
         <meta name="author" content="Grzegorz Osimowicz, Dawid Królak"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        
-        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-          <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-          <![endif]-->
-           
     </head>
     <body>
+        <div class="container">
         {% for flashMessage in app.session.flashbag.get('warning') %}
             <div class="alert alert-block">
               <a class="close" data-dismiss="alert" href="#">×</a>
@@ -44,43 +31,34 @@
               {{flashMessage}}
             </div>
         {% endfor %}
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                  <a class="brand" href="#">ITA::Panel sterowania</a>
-                  
-                    <ul class="nav pull-right">
-                        <li>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a href="{{path('fos_user_security_logout')}}"><i class="icon-off icon-white"></i> wyloguj</a>
-                        {% else %}
-                            <a href="{{path('fos_user_security_login')}}"><i class="icon-user icon-white"></i> zaloguj</a>
-                        {% endif %}
-                        </li>
-                    </ul>
-                  
-                  </ul>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="/#">ITA::Panel sterowania</a>
                 </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{path('fos_user_security_logout')}}"><i class="glyphicon glyphicon-off"></i> wyloguj</a>
+                    {% else %}
+                        <a href="{{path('fos_user_security_login')}}"><i class="glyphicon glyphicon-user"></i> zaloguj</a>
+                    {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-md-2">
+                 <ul class="well nav nav-pills nav-stacked">
+                        {{ render(controller('FrontendBundle:Frontend:Menu')) }}
+                 </ul>
+            </div>
+            <div class="col-md-10" id="leftMenu">
+                {% block content %}{% endblock %}
             </div>
         </div>
-        <div class="container">
             <div class="row">
-                <div class="span3" id="leftMenu">
-                    <div class="well" style="padding:8px 0;">
-                        <ul class="nav nav-list">
-                            {% block menu %}
-                                {{ render(controller('FrontendBundle:Frontend:Menu')) }}
-                                
-                            {% endblock %}
-                        </ul>
-                    </div>
-                </div>
-                <div class="span9">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
-            <div class="row">
-                <div id="sponsors" class="span12">
+                <div class="col-md-12 sponsors">
                     <a href="http://uni.lodz.pl"><img src="{{asset('/bundles/frontend/images/logoUL.png')}}" alt="Uniwersytet Łódzki" title="Uniwersytet Łódzki"/></a>
                     <a href="http://wfis.uni.lodz.pl"><img src="{{asset('/bundles/frontend/images/wfis.jpg')}}" alt="Wydział Fizyki i Informatyki Stosowanej Uniwersytety Łódzkiego" title="WFIS"/></a>
                     <a href="http://wfis.uni.lodz.pl/edu"><img src="{{asset('/bundles/frontend/images/KMPNlogomini.jpg')}}" alt="Katedra Modelowania Procesów Nauczania" title="KMPN"/></a>
@@ -91,29 +69,30 @@
                 </div>
             </div>
             <footer>
-                &copy; 2012 Wydział Fizyki i Informatyki Stosowanej Uniwersytetu Łódzkiego<br/>Wykonanie KrOs
+                &copy; 2012-2015 Wydział Fizyki i Informatyki Stosowanej Uniwersytetu Łódzkiego<br/>Wykonanie KrOs
             </footer>
-        </div>  
+        </div>
         <!-- ================================== JAVA SCRIPTS ================================== -->
         
+        <script src="/jspm_packages/system.js"></script>
+        <script src="/config.js"></script>
+        <script>
+            System.import('jquery');
+            System.import('flot/flot');
+        </script>
         {% block javascripts %}
-            <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>           {% javascripts 
-                'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'              
-                'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'
-                '@FrontendBundle/Resources/public/js/bootstrap.min.js'
-
+            {% javascripts
                 '@FrontendBundle/Resources/public/js/websocket.js'
                 '@FrontendBundle/Resources/public/js/sponsors.js'
-                'bundles/fosjsrouting/js/router.js'     
                 %}
                 <script src="{{ asset_url }}" type="text/javascript"></script>
             {% endjavascripts %}
-            <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
             <script type="text/javascript">$(function(){
                 $('#ajaxLoader').modal('hide');
             });</script>
             <script type="text/javascript" src="{{ asset('') }}"></script>
         {% endblock %}
+
         <!-- ================================== END SCRIPTS ================================== -->
     </body>
 </html>

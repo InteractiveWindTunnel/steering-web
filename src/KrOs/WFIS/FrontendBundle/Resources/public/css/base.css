@@ -37,9 +37,6 @@ ol.about dl{text-align: justify;}
 
 h3.thanks{margin-top: 10px;text-align: center;}
 
-#sponsors{position: relative; overflow: hidden; height:60px; padding-top:10px;line-height: 60px;}
-#sponsors a{text-align: center;margin-top:20px;}
-#sponsors a img{height:50px;position:absolute;  display:none; }
 #leftMenu{}
 
 .right-align{text-align: right !important;}

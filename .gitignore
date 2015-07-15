@@ -1,4 +1,6 @@
+/.sass-cache/
 /web/bundles/
+/web/assets/
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
@@ -11,4 +13,4 @@
 /bin/
 /composer.phar
 /node_modules/
-/jspm_packages/
+/web/jspm_packages/

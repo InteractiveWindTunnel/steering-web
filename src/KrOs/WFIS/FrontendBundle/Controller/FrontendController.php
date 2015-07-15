@@ -129,7 +129,11 @@ class FrontendController extends Controller
         $id = $request->get('aid');
       
         if ($id) {
-            $article = $article = $this->get('doctrine.orm.entity_manager')->getRepository('FrontendBundle:Article')->findOneBy(array('id'=>$id));
+            $article = $article = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('FrontendBundle:Article')
+                ->findOneById($id);
         }
         $form = $this->createForm(new ArticleType(), $article);
         if ($request->getMethod() === 'POST') {
@@ -142,7 +146,7 @@ class FrontendController extends Controller
             }
             $this->get('session')->setFlash('warning', 'Wystąpiły błędy, popraw formularz i spróbuj ponownie.');
         }
-        return $this->render('FrontendBundle::articleForm.html.twig', array('form'=>$form->createView()));
+        return $this->render('FrontendBundle::articleForm.html.twig', array('form' => $form->createView()));
     }
     
     
@@ -156,6 +160,6 @@ class FrontendController extends Controller
             ->getRepository('FrontendBundle:Article')
             ->findOneBySlug($slug);
 
-        return $this->render('FrontendBundle::showArticle.html.twig', array('article'=>$article));
+        return $this->render('FrontendBundle::showArticle.html.twig', array('article' => $article));
     }
 }
