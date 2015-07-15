@@ -41,7 +41,7 @@ class Setting
     }
     public function setKey($newVal)
     {
-        $this->key=$newVal;
+        $this->key = $newVal;
         return $this;
     }
     public function getKey()
@@ -50,7 +50,7 @@ class Setting
     }
     public function setValue($newVal)
     {
-        $this->value=$newVal;
+        $this->value = $newVal;
         return $this;
     }
     public function getValue()

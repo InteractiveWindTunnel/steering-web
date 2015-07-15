@@ -12,8 +12,8 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('icon_class', 'text', array('required'=>false))
-            ->add('content', 'textarea', array('required'=>false));
+            ->add('icon_class', 'text', array('required' => false))
+            ->add('content', 'textarea', array('required' => false));
     }
     
     public function getName()

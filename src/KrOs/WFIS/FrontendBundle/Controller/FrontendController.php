@@ -139,9 +139,8 @@ class FrontendController extends Controller
                 $this->get('doctrine.orm.entity_manager')->flush();
                 $this->get('session')->setFlash('notice', 'Pomyślnie dodano artykuł.');
                 return $this->redirect($this->get('router')->generate('showArticle', array('slug'=>$article->getSlug())));
-            } else {
-                $this->get('session')->setFlash('warning', 'Wystąpiły błędy, popraw formularz i spróbuj ponownie.');
             }
+            $this->get('session')->setFlash('warning', 'Wystąpiły błędy, popraw formularz i spróbuj ponownie.');
         }
         return $this->render('FrontendBundle::articleForm.html.twig', array('form'=>$form->createView()));
     }
