@@ -50,7 +50,8 @@
         "compile": [
             "jspm install",
             "gulp css",
-            "gulp build"
+            "gulp build",
+            "jspm bundle '*' + aurelia-bootstrapper + aurelia-framework + jquery + jquery-ui web/dist/app/app-bundle.js --inject --minify"
         ]
     },
     "config": {
