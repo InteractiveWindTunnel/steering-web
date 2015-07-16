@@ -12,7 +12,7 @@ System.config({
     "npm:*": "jspm_packages/npm/*.js"
   },
   "bundles": {
-    "dist/app/app-bundle": [
+    "../app-bundle": [
       "github:components/jquery@2.1.4/jquery",
       "github:components/jquery@2.1.4",
       "github:components/jqueryui@1.11.4/jquery-ui",
