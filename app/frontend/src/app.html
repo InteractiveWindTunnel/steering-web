@@ -1,3 +1,7 @@
 <template>
-<h1>Tu Aurelka, zgłaszam się</h1>
+<h1>Aurelia on Symfony2 with autobahn.js!</h1>
+<h3>Received ${messages.length} messages</h3>
+<ol>
+    <li repeat.for="message of messages">${message}</li>
+</ol>
 </template>
