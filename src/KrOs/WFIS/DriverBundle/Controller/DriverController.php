@@ -13,7 +13,7 @@ class DriverController extends Controller
      */
     public function startAction()
     {
-        exec('echo "PWR=1">/dev/ttyS0');
+        // exec('echo "PWR=1">/dev/ttyS0');
         return new JsonResponse(['success'=>true]);
     }
     
@@ -22,7 +22,7 @@ class DriverController extends Controller
     */
     public function stopAction()
     {
-        exec('echo "PWR=0">/dev/ttyS0');
+        // exec('echo "PWR=0">/dev/ttyS0');
         return new JsonResponse(['success'=>true]);
     }
 }

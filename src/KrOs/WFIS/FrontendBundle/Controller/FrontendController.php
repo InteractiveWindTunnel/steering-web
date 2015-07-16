@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +19,7 @@ class FrontendController extends Controller
     /**
      * @Route("/skrzydlo/", name="wing")
      * @Method("GET")
-     * @Secure(roles="ROLE_USER")
+     * @Security("has_role('ROLE_USER')")
      */
     public function wingAction()
     {
@@ -40,7 +41,7 @@ class FrontendController extends Controller
     /**
      * @Route("/silownia/", name="power")
      * @Method("GET")
-     * @Secure(roles="ROLE_USER")
+     * @Security("has_role('ROLE_USER')")
      */
     public function powerAction()
     {
@@ -77,7 +78,7 @@ class FrontendController extends Controller
     /**
     * @Route("/article/add", name="addArticle")
     * @Method("GET")
-    * @Secure("ROLE_ADMIN")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function addNewArticleAction()
     {
@@ -89,7 +90,7 @@ class FrontendController extends Controller
     /**
     * @Route("/article/edit/{slug}", name="editArticle")
     * @Method("GET")
-    * @Secure("ROLE_ADMIN")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function editArticleAction($slug)
     {
@@ -107,7 +108,7 @@ class FrontendController extends Controller
     
     /**
     * @Route("/article/delete/{slug}", name="deleteArticle")
-    * @Secure("ROLE_ADMIN")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function deleteArticleAction($slug)
     {
@@ -121,7 +122,7 @@ class FrontendController extends Controller
     /**
     * @Route("/article/submit", name="submitArticle")
     * @Method({"GET", "POST"})
-    * @Secure("ROLE_ADMIN")
+    * @Security("has_role('ROLE_ADMIN')")
     */
     public function submitFormAction(Request $request)
     {

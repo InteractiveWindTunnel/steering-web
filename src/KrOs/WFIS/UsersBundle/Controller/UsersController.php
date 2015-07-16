@@ -6,8 +6,11 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use KrOs\WFIS\UsersBundle\Form\Type\UserType;
 use KrOs\WFIS\UsersBundle\Entity\User;
@@ -15,7 +18,7 @@ use KrOs\WFIS\UsersBundle\Entity\User;
 class UsersController extends Controller
 {
     /**
-     * @Secure(roles="ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/", name="users_list")
      * @Template()
      */
@@ -26,7 +29,7 @@ class UsersController extends Controller
     }
     
     /**
-     * @Secure(roles="ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/edit/{nickname}", name="user_edit")
      *
      */
@@ -39,7 +42,7 @@ class UsersController extends Controller
     }
     
     /**
-     * @Secure(roles="ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/add", name="user_add")
      *
      */
@@ -52,7 +55,7 @@ class UsersController extends Controller
     }
     
     /**
-     * @Secure(roles="ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/submit", name="user_form_submit")
      *
      */
@@ -75,7 +78,7 @@ class UsersController extends Controller
     }
     
     /**
-     * @Secure(roles="ROLE_ADMIN")
+     * @Security("has_role('ROLE_ADMIN')")
      * @Route("/delete", name="user_delete")
      *
      */
@@ -88,6 +91,6 @@ class UsersController extends Controller
             $em->remove($user);
         }
         $em->flush();
-        return new Response(json_encode(array('success'=>true)));
+        return new JsonResponse(['success'=>true]);
     }
 }
