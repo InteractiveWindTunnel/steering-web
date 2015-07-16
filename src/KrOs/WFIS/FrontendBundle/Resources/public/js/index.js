@@ -1,6 +1,5 @@
-
 $(function () {
-    $('#powerSwtich').bind('click',function () {
+    $('#powerSwtich').bind('click', function () {
         console.log('WAŻNE RZECZY 2 RAZY!');
         var button = $(this);
         var fanButton = $('#fanSwtich');

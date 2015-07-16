@@ -14,3 +14,7 @@
 /composer.phar
 /node_modules/
 /web/jspm_packages/
+/web/dist/
+/web/css
+/web/js
+/doc/

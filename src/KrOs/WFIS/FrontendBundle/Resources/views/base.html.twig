@@ -77,21 +77,12 @@
         <script src="/jspm_packages/system.js"></script>
         <script src="/config.js"></script>
         <script>
-            System.import('jquery');
-            System.import('flot/flot');
+            System.import("jquery");
+            System.import("flot/flot");
+            System.import("jquery-ui");
         </script>
-        {% block javascripts %}
-            {% javascripts
-                '@FrontendBundle/Resources/public/js/websocket.js'
-                '@FrontendBundle/Resources/public/js/sponsors.js'
-                %}
-                <script src="{{ asset_url }}" type="text/javascript"></script>
-            {% endjavascripts %}
-            <script type="text/javascript">$(function(){
-                $('#ajaxLoader').modal('hide');
-            });</script>
-            <script type="text/javascript" src="{{ asset('') }}"></script>
-        {% endblock %}
+            {% block javascripts %}
+            {% endblock %}
 
         <!-- ================================== END SCRIPTS ================================== -->
     </body>
