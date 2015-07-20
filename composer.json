@@ -2,13 +2,13 @@
     "name": "ita/steering",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "description": "Ita Steering",
     "autoload": {
         "psr-0": { "": "src/" }
     },
     "require": {
-        "doctrine/orm": "*",
-        "doctrine/doctrine-bundle": "*",
+        "doctrine/orm": "~2.3",
+        "doctrine/doctrine-bundle": "~1.5",
         "php": ">=5.5.0",
         "symfony/symfony": "2.7.*",
         "symfony/assetic-bundle": "~2.3",
@@ -17,9 +17,6 @@
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "friendsofsymfony/user-bundle": "~2.0@dev",
-        "stof/doctrine-extensions-bundle": "~1.1",
-        "doctrine/doctrine-fixtures-bundle": "dev-master",
         "ext-mbstring": "*"
     },
     "require-dev": {
@@ -52,6 +49,9 @@
             "gulp css",
             "gulp build",
             "jspm bundle '*' + aurelia-bootstrapper + aurelia-framework + jquery + jquery-ui app-bundle.js --inject --minify && mv app-bundle.js* web/dist/app/"
+        ],
+        "serve": [
+            "AppBundle\\Composer\\ScriptHandler::serve"
         ]
     },
     "config": {

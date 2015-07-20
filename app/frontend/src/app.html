@@ -1,7 +1,8 @@
 <template>
-<h1>Aurelia on Symfony2 with autobahn.js!</h1>
-<h3>Received ${messages.length} messages</h3>
-<ol>
-    <li repeat.for="message of messages">${message}</li>
-</ol>
+    <div class="container-fluid">
+        <h1>Aurelia on Symfony2 with autobahn.js!</h1>
+        <div class="col-sm-2">Autobahn connection status ${connected ? "Active" : "Inactive"}</div>
+        <div class="col-sm-10 chart" ref="chart">
+        </div>
+    </div>
 </template>

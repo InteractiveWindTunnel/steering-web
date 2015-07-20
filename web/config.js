@@ -26,6 +26,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.7.0",
     "bootstrap-sass": "github:twbs/bootstrap-sass@3.3.5",
     "core-js": "npm:core-js@0.9.18",
+    "d3": "github:mbostock/d3@3.5.6",
     "flot/flot": "github:flot/flot@0.8.3",
     "jquery": "github:components/jquery@2.1.4",
     "jquery-ui": "github:components/jqueryui@1.11.4",
