@@ -4,12 +4,15 @@ import d3 from "d3";
 
 @inject(Autobahn)
 export class App {
-    data = [-1,0,1,2,1,0,-1,0,1,2,1,0,-1,0,1,2,1,0,-1];
+    data = [];
     graph = null;
     line = null;
     connected = false;
     chart = null;
     constructor(autobahn) {
+        for (let i = 0; i < 100; i++) {
+            this.data.push(0);
+        }
         this.connection = new autobahn.Connection({
             url: "ws://ita-crossbar.herokuapp.com/ws",
             realm: "realm1"
@@ -36,16 +39,13 @@ export class App {
     }
 
     addToChart(value) {
-        console.log(value);
         this.data.push(value);
-        graph.selectAll("path")
-            .data([this.data])
-            .attr("transform", "translate(" + this.x(1) + ")")
-            .attr("d", this.line)
+        console.log(this.data.length);
+        this.graph.selectAll("path")
+            .attr("d", this.line(this.data))
+            .attr("transform", null)
             .transition()
-            .ease("linear")
-            .duration(100)
-            .attr("transform", "translate(" + this.x(0) + ")");
+            .attr("transform", "translate(" + this.x(-1) + ")");
         if (this.data.length > 100) {
             this.data.shift();
         }
