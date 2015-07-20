@@ -1,7 +1,10 @@
 <template>
     <div class="container-fluid">
         <h1>Aurelia on Symfony2 with autobahn.js!</h1>
-        <div class="col-sm-2">Autobahn connection status ${connected ? "Active" : "Inactive"}</div>
+        <div class="col-sm-2">
+            Autobahn connection status: ${connected ? "Active" : "Inactive"}.
+            Receiving data from <strong>com.windtunnel.data</strong>
+        </div>
         <div class="col-sm-10 chart" ref="chart">
         </div>
     </div>

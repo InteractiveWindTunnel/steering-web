@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div aurelia-app="main">
+    <h1>Loading Aurelia app …</h1>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    System.import("aurelia-bootstrapper");
+</script>
+{% endblock %}

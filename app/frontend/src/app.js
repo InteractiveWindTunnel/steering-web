@@ -40,7 +40,6 @@ export class App {
 
     addToChart(value) {
         this.data.push(value);
-        console.log(this.data.length);
         this.graph.selectAll("path")
             .attr("d", this.line(this.data))
             .attr("transform", null)
@@ -53,7 +52,6 @@ export class App {
 
     initChart() {
         this.graph = d3.select(this.chart).append("svg:svg").attr("width", "100%").attr("height", "100%");
-        console.log(this.graph);
         this.line = d3.svg.line()
             .x(function(d, i) {
                 return this.x(i);

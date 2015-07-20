@@ -49,9 +49,6 @@
             "gulp css",
             "gulp build",
             "jspm bundle '*' + aurelia-bootstrapper + aurelia-framework + jquery + jquery-ui app-bundle.js --inject --minify && mv app-bundle.js* web/dist/app/"
-        ],
-        "serve": [
-            "AppBundle\\Composer\\ScriptHandler::serve"
         ]
     },
     "config": {
