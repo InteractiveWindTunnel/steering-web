@@ -9,6 +9,9 @@ export class App {
     line = null;
     connected = false;
     chart = null;
+    frequency = 1;
+    fluctuation = 1;
+    session = null;
     constructor(autobahn) {
         for (let i = 0; i < 100; i++) {
             this.data.push(0);
@@ -20,6 +23,9 @@ export class App {
 
         this.connection.onopen = (session, details) => {
             session.subscribe("com.windtunnel.data", ([value]) => this.addToChart(value));
+            session.subscribe("com.windtunnel.frequency", ([value]) => this.frequency = value);
+            session.subscribe("com.windtunnel.fluctuation", ([value]) => this.fluctuation = value);
+            this.session = session;
             this.connected  = true;
         };
 
@@ -36,6 +42,22 @@ export class App {
 
     attached() {
         this.initChart();
+    }
+
+    updateFrequency(event) {
+        if (this.session === null) {
+            return;
+        }
+        this.session
+            .call("com.windtunnel.setfrequency", [event.target.value]);
+    }
+
+    updateFluctuation(event) {
+        if (this.session === null) {
+            return;
+        }
+        this.session
+            .call("com.windtunnel.setfluctuation", [event.target.value]);
     }
 
     addToChart(value) {
